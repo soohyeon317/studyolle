@@ -1,5 +1,6 @@
 package com.studyolle.account;
 
+import com.studyolle.domain.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -57,15 +58,23 @@ class AccountControllerTest {
     @DisplayName("회원가입 처리 - 정상값 오류")
     @Test
     void signUpSubmitWithCorrectInput() throws Exception {
+        String nickname = "soohyeon317";
+        String email = "soohyeon317@gmail.com";
+        String password = "12345678";
+
         mockMvc.perform(post("/sign-up")
-                .param("nickname", "soohyeon317")
-                .param("email", "soohyeon317@email.com")
-                .param("password", "12345678")
+                .param("nickname", nickname)
+                .param("email", email)
+                .param("password", password)
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
-        assertTrue(accountRepository.existsByEmail("soohyeon317@email.com"));
+        Account account = accountRepository.findByEmail(email);
+        assertNotNull(account);
+        assertNotEquals(account.getPassword(), password);
+
+        assertTrue(accountRepository.existsByEmail(email));
         then(javaMailSender).should().send(any(SimpleMailMessage.class));
     }
 
