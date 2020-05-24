@@ -47,7 +47,7 @@ class AccountControllerTest {
     @Test
     void signUpSubmitWithWrongInput() throws Exception {
         mockMvc.perform(post("/sign-up")
-                .param("nickname", "soohyeon")
+                .param("nickname", "dean")
                 .param("email", "email..")
                 .param("password", "12345")
                 .with(csrf()))
@@ -58,7 +58,7 @@ class AccountControllerTest {
     @DisplayName("회원가입 처리 - 정상값 오류")
     @Test
     void signUpSubmitWithCorrectInput() throws Exception {
-        String nickname = "soohyeon317";
+        String nickname = "dean";
         String email = "soohyeon317@gmail.com";
         String password = "12345678";
 
@@ -73,8 +73,7 @@ class AccountControllerTest {
         Account account = accountRepository.findByEmail(email);
         assertNotNull(account);
         assertNotEquals(account.getPassword(), password);
-
-        assertTrue(accountRepository.existsByEmail(email));
+        assertNotNull(account.getEmailCheckToken());
         then(javaMailSender).should().send(any(SimpleMailMessage.class));
     }
 
