@@ -71,7 +71,7 @@ public class AccountService {
         // 사용 이유: 3번 때문에
         // 가능한 로그인 케이스: 1번, 2번, 3번
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                account.getNickname(),
+                new UserAccount(account), // principal 객체에 해당
                 account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
