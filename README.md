@@ -7,3 +7,8 @@
 1. "src/main/resources/static" 경로로 이동
 2. npm install bootstrap
 3. npm install jquery
+4. .gitignore에 내용 추가
+---
+src/main/resources/static/node_modules  
+src/main/resources/static/node
+---
