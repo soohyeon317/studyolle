@@ -23,7 +23,7 @@ public class SettingsController {
     private final AccountService accountService;
 
     @GetMapping(SETTINGS_PROFILE_URL)
-    public String profileUpdateForm(
+    public String updateProfileForm(
             @CurrentUser Account account,
             Model model)
     {
