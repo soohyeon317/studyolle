@@ -12,3 +12,5 @@
 src/main/resources/static/node_modules  
 src/main/resources/static/node
 ---
+5. npm install cropper
+6. npm install jquery-cropper
