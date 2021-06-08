@@ -110,6 +110,11 @@ public class AccountService implements UserDetailsService {
         account.setLocation(profile.getLocation());
         account.setBio(profile.getBio());
         account.setProfileImage(profile.getProfileImage());
-        accountRepository.save(account); // detached -> persist 상태 변경
+        accountRepository.save(account); // account 객체 상태를 detached->persist 상태 변경
+    }
+
+    public void updatePassword(Account account, String newPassword) {
+        account.setPassword(passwordEncoder.encode(newPassword));
+        accountRepository.save(account); // account 객체 상태를 detached->persist 상태 변경
     }
 }
