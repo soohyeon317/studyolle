@@ -121,4 +121,10 @@ public class AccountService implements UserDetailsService {
         modelMapper.map(notifications, account);
         accountRepository.save(account); // account 객체 상태를 detached->persist 상태 변경
     }
+
+    public void updateNickname(Account account, String nickname) {
+        account.setNickname(nickname);
+        accountRepository.save(account);  // account 객체 상태를 detached->persist 상태 변경
+        login(account);
+    }
 }
